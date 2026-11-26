@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f1720">
+<link rel="manifest" href="./manifest.webmanifest">
 <title>ثبت تمرین کلیستنیکس</title>
 <style>
   :root{
@@ -10,246 +12,144 @@
     --muted:#8fa3b8; --accent:#4ade80; --accent2:#38bdf8; --danger:#f87171;
   }
   *{box-sizing:border-box}
-  body{
-    margin:0; padding:16px; font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
-    background:var(--bg); color:var(--txt); line-height:1.7;
-  }
-  h1{font-size:1.3rem; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.85rem; margin-bottom:16px}
-  .tabs{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap}
-  .tab{
-    flex:1; min-width:120px; padding:10px; text-align:center; border-radius:10px;
-    background:var(--card); border:1px solid var(--line); cursor:pointer;
-    font-size:.9rem; font-weight:600; color:var(--muted);
-  }
-  .tab.active{background:var(--accent); color:#0f1720; border-color:var(--accent)}
-  .day{display:none}
-  .day.active{display:block}
-  .ex{
-    background:var(--card); border:1px solid var(--line); border-radius:12px;
-    padding:12px; margin-bottom:10px;
-  }
-  .ex-head{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:8px}
-  .ex-name{font-weight:700; font-size:.95rem}
-  .ex-target{color:var(--muted); font-size:.78rem; white-space:nowrap}
-  .sets{display:flex; flex-wrap:wrap; gap:8px}
-  .set{
-    display:flex; align-items:center; gap:6px; background:#0f1720;
-    border:1px solid var(--line); border-radius:8px; padding:6px 8px;
-  }
-  .set label{font-size:.75rem; color:var(--muted)}
-  .set input{
-    width:52px; background:transparent; border:none; border-bottom:1px solid var(--line);
-    color:var(--txt); text-align:center; font-size:.9rem; padding:2px; outline:none;
-  }
+  body{margin:0;padding:16px;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;background:var(--bg);color:var(--txt);line-height:1.7}
+  h1{font-size:1.3rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.85rem;margin-bottom:16px}
+  .tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{flex:1;min-width:120px;padding:10px;text-align:center;border-radius:10px;background:var(--card);border:1px solid var(--line);cursor:pointer;font-size:.9rem;font-weight:600;color:var(--muted)}
+  .tab.active{background:var(--accent);color:#0f1720;border-color:var(--accent)}
+  .day{display:none}.day.active{display:block}
+  .ex{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+  .ex-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}
+  .ex-name{font-weight:700;font-size:.95rem}.ex-target{color:var(--muted);font-size:.78rem;white-space:nowrap}
+  .sets{display:flex;flex-wrap:wrap;gap:8px}
+  .set{display:flex;align-items:center;gap:6px;background:#0f1720;border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+  .set label{font-size:.75rem;color:var(--muted)}
+  .set input{width:52px;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--txt);text-align:center;font-size:.9rem;padding:2px;outline:none}
   .set input:focus{border-color:var(--accent2)}
-  .notes{
-    width:100%; margin-top:8px; background:#0f1720; border:1px solid var(--line);
-    border-radius:8px; color:var(--txt); padding:8px; font-size:.82rem; resize:vertical;
-    font-family:inherit; outline:none;
-  }
+  .notes{width:100%;margin-top:8px;background:#0f1720;border:1px solid var(--line);border-radius:8px;color:var(--txt);padding:8px;font-size:.82rem;resize:vertical;font-family:inherit;outline:none}
   .notes:focus{border-color:var(--accent2)}
-  .bar{
-    display:flex; gap:8px; margin:16px 0; flex-wrap:wrap;
-  }
-  button{
-    flex:1; min-width:130px; padding:11px; border-radius:10px; border:none;
-    font-weight:700; font-size:.88rem; cursor:pointer; font-family:inherit;
-  }
-  .btn-save{background:var(--accent); color:#0f1720}
-  .btn-export{background:var(--accent2); color:#0f1720}
-  .btn-import{background:var(--card); color:var(--txt); border:1px solid var(--line)}
-  .btn-clear{background:transparent; color:var(--danger); border:1px solid var(--danger)}
-  .saved{
-    position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(20px);
-    background:var(--accent); color:#0f1720; padding:8px 18px; border-radius:20px;
-    font-size:.82rem; font-weight:700; opacity:0; transition:.25s; pointer-events:none;
-  }
-  .saved.show{opacity:1; transform:translateX(-50%) translateY(0)}
-  input[type=date]{
-    background:var(--card); border:1px solid var(--line); color:var(--txt);
-    border-radius:8px; padding:8px; font-family:inherit; font-size:.85rem;
-  }
+  .bar{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+  button{flex:1;min-width:130px;padding:11px;border-radius:10px;border:none;font-weight:700;font-size:.88rem;cursor:pointer;font-family:inherit}
+  .btn-save{background:var(--accent);color:#0f1720}.btn-export{background:var(--accent2);color:#0f1720}
+  .btn-import{background:var(--card);color:var(--txt);border:1px solid var(--line)}
+  .btn-clear{background:transparent;color:var(--danger);border:1px solid var(--danger)}
+  .saved{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--accent);color:#0f1720;padding:8px 18px;border-radius:20px;font-size:.82rem;font-weight:700;opacity:0;transition:.25s;pointer-events:none}
+  .saved.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  input[type=date]{background:var(--card);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:8px;font-family:inherit;font-size:.85rem}
+  .offline-status{font-size:.75rem;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
-
-<h1>🏋️ ثبت تمرین کلیستنیکس</h1>
-<div class="sub">تاریخ: <input type="date" id="date"></div>
-
+<h1>ثبت تمرین کلیستنیکس</h1>
+<div class="sub">تاریخ: <input type="date" id="date"><div class="offline-status" id="offlineStatus">آماده‌سازی حالت آفلاین...</div></div>
 <div class="tabs">
   <div class="tab active" data-day="d1">Push + Core</div>
   <div class="tab" data-day="d2">Pull + Core</div>
   <div class="tab" data-day="d3">Legs + Full Body</div>
 </div>
-
 <div id="days"></div>
-
 <div class="bar">
-  <button class="btn-save" onclick="saveAll()">💾 ذخیره</button>
-  <button class="btn-export" onclick="exportJSON()">⬇️ خروجی JSON</button>
-  <button class="btn-import" onclick="document.getElementById('fileIn').click()">⬆️ ورود JSON</button>
-  <button class="btn-clear" onclick="clearAll()">🗑 پاک کردن</button>
+  <button class="btn-save" onclick="saveAll()">ذخیره</button>
+  <button class="btn-export" onclick="exportJSON()">خروجی JSON</button>
+  <button class="btn-import" onclick="document.getElementById('fileIn').click()">ورود JSON</button>
+  <button class="btn-clear" onclick="clearAll()">پاک کردن</button>
 </div>
 <input type="file" id="fileIn" accept=".json" style="display:none">
-
 <div class="saved" id="toast">ذخیره شد ✓</div>
-
 <script>
 const PROGRAM = {
-  d1: {
-    title: "Push + Core",
-    ex: [
-      {name:"Push-up", target:"3 × 6–10", sets:3},
-      {name:"Pike Push-up", target:"3 × 5–8", sets:3},
-      {name:"Incline Push-up", target:"2 × 10–12", sets:2},
-      {name:"Bench Dip", target:"2 × 8–10", sets:2},
-      {name:"Plank", target:"3 × 30 ثانیه", sets:3, unit:"ثانیه"},
-      {name:"Hollow Body Hold", target:"3 × 20 ثانیه", sets:3, unit:"ثانیه"},
-    ]
-  },
-  d2: {
-    title: "Pull + Core",
-    ex: [
-      {name:"Assisted Pull-up", target:"3 × 5–8", sets:3},
-      {name:"Inverted Row / Band Row", target:"3 × 8–12", sets:3},
-      {name:"Scapular Pull-up", target:"2 × 6–8", sets:2},
-      {name:"Band Face Pull", target:"3 × 12–15", sets:3},
-      {name:"Hanging Knee Raise", target:"3 × 8–12", sets:3},
-      {name:"Dead Bug", target:"2 × 10", sets:2},
-    ]
-  },
-  d3: {
-    title: "Legs + Full Body",
-    ex: [
-      {name:"Bodyweight Squat", target:"3 × 12–15", sets:3},
-      {name:"Reverse Lunge", target:"3 × 8 هر پا", sets:3},
-      {name:"Glute Bridge", target:"3 × 12", sets:3},
-      {name:"Calf Raise", target:"3 × 15", sets:3},
-      {name:"Burpee بدون پرش", target:"2 × 6–8", sets:2},
-      {name:"L-Sit Progression", target:"3 × 10–15 ثانیه", sets:3, unit:"ثانیه"},
-    ]
-  }
+  d1:{title:"Push + Core",ex:[
+    {name:"Push-up",target:"3 × 6–10",sets:3},
+    {name:"Pike Push-up",target:"3 × 5–8",sets:3},
+    {name:"Incline Push-up",target:"2 × 10–12",sets:2},
+    {name:"Bench Dip",target:"2 × 8–10",sets:2},
+    {name:"Plank",target:"3 × 30 ثانیه",sets:3,unit:"ثانیه"},
+    {name:"Hollow Body Hold",target:"3 × 20 ثانیه",sets:3,unit:"ثانیه"}
+  ]},
+  d2:{title:"Pull + Core",ex:[
+    {name:"Assisted Pull-up",target:"3 × 5–8",sets:3},
+    {name:"Inverted Row / Band Row",target:"3 × 8–12",sets:3},
+    {name:"Scapular Pull-up",target:"2 × 6–8",sets:2},
+    {name:"Band Face Pull",target:"3 × 12–15",sets:3},
+    {name:"Hanging Knee Raise",target:"3 × 8–12",sets:3},
+    {name:"Dead Bug",target:"2 × 10",sets:2}
+  ]},
+  d3:{title:"Legs + Full Body",ex:[
+    {name:"Bodyweight Squat",target:"3 × 12–15",sets:3},
+    {name:"Reverse Lunge",target:"3 × 8 هر پا",sets:3},
+    {name:"Glute Bridge",target:"3 × 12",sets:3},
+    {name:"Calf Raise",target:"3 × 15",sets:3},
+    {name:"Burpee بدون پرش",target:"2 × 6–8",sets:2},
+    {name:"L-Sit Progression",target:"3 × 10–15 ثانیه",sets:3,unit:"ثانیه"}
+  ]}
 };
-
-const KEY = "calisthenics_tracker_v1";
-let state = load() || {};
-
-function load(){
-  try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; }
-}
+const KEY="calisthenics_tracker_v1";
+let state=load()||{};
+function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
 function persist(){
-  localStorage.setItem(KEY, JSON.stringify(state));
+  try{localStorage.setItem(KEY,JSON.stringify(state));return true;}
+  catch(e){toast("ذخیره‌سازی مرورگر در دسترس نیست");return false;}
 }
-
 function buildUI(){
-  const wrap = document.getElementById("days");
-  wrap.innerHTML = "";
+  const wrap=document.getElementById("days");wrap.innerHTML="";
   for(const dayId in PROGRAM){
-    const day = PROGRAM[dayId];
-    const div = document.createElement("div");
-    div.className = "day" + (dayId==="d1" ? " active" : "");
-    div.id = dayId;
-    day.ex.forEach((ex, i) => {
-      const key = dayId + "_" + i;
-      const rec = state[key] || {};
-      const unit = ex.unit || "تکرار";
-      let setsHTML = "";
-      for(let s=0; s<ex.sets; s++){
-        const val = (rec.sets && rec.sets[s] != null) ? rec.sets[s] : "";
-        setsHTML += `<div class="set">
-          <label>ست ${s+1}</label>
-          <input type="number" inputmode="numeric" placeholder="—"
-                 value="${val}" onchange="setVal('${key}', ${s}, this.value)">
-        </div>`;
+    const day=PROGRAM[dayId],div=document.createElement("div");
+    div.className="day"+(dayId==="d1"?" active":"");div.id=dayId;
+    day.ex.forEach((ex,i)=>{
+      const key=dayId+"_"+i,rec=state[key]||{},unit=ex.unit||"تکرار";let setsHTML="";
+      for(let s=0;s<ex.sets;s++){
+        const val=(rec.sets&&rec.sets[s]!=null)?rec.sets[s]:"";
+        setsHTML+=`<div class="set"><label>ست ${s+1}</label><input type="number" inputmode="numeric" placeholder="—" value="${val}" onchange="setVal('${key}',${s},this.value)"></div>`;
       }
-      div.innerHTML += `
-        <div class="ex">
-          <div class="ex-head">
-            <span class="ex-name">${ex.name}</span>
-            <span class="ex-target">${ex.target}</span>
-          </div>
-          <div class="sets">${setsHTML}</div>
-          <input class="notes" placeholder="یادداشت (${unit} / فرم / وزن کمکی...)"
-                 value="${rec.note || ""}" onchange="setNote('${key}', this.value)">
-        </div>`;
+      const card=document.createElement("div");card.className="ex";
+      card.innerHTML=`<div class="ex-head"><span class="ex-name">${ex.name}</span><span class="ex-target">${ex.target}</span></div><div class="sets">${setsHTML}</div><input class="notes" placeholder="یادداشت (${unit} / فرم / وزن کمکی...)" value="${escapeAttr(rec.note||"")}" onchange="setNote('${key}',this.value)">`;
+      div.appendChild(card);
     });
     wrap.appendChild(div);
   }
 }
-
-function setVal(key, setIndex, value){
-  if(!state[key]) state[key] = {sets:[]};
-  state[key].sets[setIndex] = value === "" ? null : Number(value);
-  persist();
-  toast();
-}
-function setNote(key, value){
-  if(!state[key]) state[key] = {sets:[]};
-  state[key].note = value;
-  persist();
-  toast();
-}
-
-function saveAll(){ persist(); toast("ذخیره شد ✓"); }
-
+function escapeAttr(value){return String(value).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function setVal(key,index,value){if(!state[key])state[key]={sets:[]};state[key].sets[index]=value===""?null:Number(value);persist();toast();}
+function setNote(key,value){if(!state[key])state[key]={sets:[]};state[key].note=value;persist();toast();}
+function saveAll(){persist();toast("ذخیره شد ✓");}
 let toastTimer;
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg || "ذخیره شد ✓";
-  t.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>t.classList.remove("show"), 1400);
-}
-
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg||"ذخیره شد ✓";t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),1400);}
+function localDate(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
 function exportJSON(){
-  const date = document.getElementById("date").value || "no-date";
-  const data = { exported: new Date().toISOString(), date, state };
-  const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `calisthenics-${date}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
+  const date=document.getElementById("date").value||"no-date",data={exported:new Date().toISOString(),date,state};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download=`calisthenics-${date}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-
-function clearAll(){
-  if(!confirm("همه رکوردها پاک شوند؟ این کار قابل بازگشت نیست.")) return;
-  state = {};
-  persist();
-  buildUI();
-  toast("پاک شد");
-}
-
-document.getElementById("fileIn").addEventListener("change", e => {
-  const f = e.target.files[0];
-  if(!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    try{
-      const parsed = JSON.parse(ev.target.result);
-      if(!parsed.state) throw new Error("bad file");
-      state = parsed.state;
-      if(parsed.date) document.getElementById("date").value = parsed.date;
-      persist();
-      buildUI();
-      toast("وارد شد ✓");
-    }catch(err){ alert("فایل معتبر نیست."); }
-  };
+function clearAll(){if(!confirm("همه رکوردها پاک شوند؟ این کار قابل بازگشت نیست."))return;state={};persist();buildUI();toast("پاک شد");}
+document.getElementById("fileIn").addEventListener("change",e=>{
+  const f=e.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=ev=>{try{const parsed=JSON.parse(ev.target.result);if(!parsed.state)throw new Error("bad file");state=parsed.state;if(parsed.date)document.getElementById("date").value=parsed.date;persist();buildUI();toast("وارد شد ✓");}catch(err){alert("فایل معتبر نیست.");}e.target.value="";};
   r.readAsText(f);
 });
-
-document.querySelectorAll(".tab").forEach(tab => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-    document.querySelectorAll(".day").forEach(d=>d.classList.remove("active"));
-    tab.classList.add("active");
-    document.getElementById(tab.dataset.day).classList.add("active");
-  });
-});
-
-document.getElementById("date").value = new Date().toISOString().slice(0,10);
+document.querySelectorAll(".tab").forEach(tab=>tab.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".day").forEach(d=>d.classList.remove("active"));
+  tab.classList.add("active");document.getElementById(tab.dataset.day).classList.add("active");
+}));
+document.getElementById("date").value=localDate();
 buildUI();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load",async()=>{
+    try{
+      await navigator.serviceWorker.register("./sw.js");
+      document.getElementById("offlineStatus").textContent="حالت آفلاین فعال شد؛ یک بار آنلاین بازش کن تا ذخیره شود.";
+    }catch(err){
+      document.getElementById("offlineStatus").textContent="ذخیره آفلاین فعال نشد؛ صفحه را از GitHub Pages باز کن.";
+    }
+  });
+}else{
+  document.getElementById("offlineStatus").textContent="این مرورگر از حالت آفلاین برنامه پشتیبانی نمی‌کند.";
+}
+window.addEventListener("online",()=>{document.getElementById("offlineStatus").textContent="آنلاین";});
+window.addEventListener("offline",()=>{document.getElementById("offlineStatus").textContent="آفلاین؛ برنامه از حافظه مرورگر اجرا می‌شود.";});
+if(!navigator.onLine)document.getElementById("offlineStatus").textContent="آفلاین؛ برنامه از حافظه مرورگر اجرا می‌شود.";
 </script>
 </body>
 </html>
